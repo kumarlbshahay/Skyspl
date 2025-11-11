@@ -62,4 +62,12 @@ public class NgoService {
 		return ngoRepository.findAll();
 	}
 
+	public Ngo loginByDarpanId(String darpanId) {
+		return ngoRepository.findByDarpanId(darpanId);
+	}
+
+	public Ngo loginByEmail(String email) {
+		return ngoRepository.findByEmail(email);
+	}
+
 }

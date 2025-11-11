@@ -7,6 +7,8 @@ import java.util.List;
 public interface NgoRepository extends JpaRepository<Ngo, Long> {
     List<Ngo> findByStatus(String status);
     List<Ngo> findByTrustedBadgeTrue();
-    Ngo findByEmail(String email);
     List<Ngo> findByCityAndStatus(String city, String status);
+	Ngo findByNameAndDarpanId(String name ,String darpanId);
+	Ngo findByDarpanId(String darpanId);
+	Ngo findByEmail(String Email);
 }
