@@ -2,18 +2,19 @@ package com.demo.main.controller;
 
 import com.demo.main.model.Ngo;
 import com.demo.main.model.NgoDocument;
-import com.demo.main.repository.NgoRepository;
 import com.demo.main.services.NgoService;
 import com.demo.main.util.EmailUtil;
 import com.demo.main.util.FileStorageUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/ngo")
@@ -120,6 +121,35 @@ public class NgoController {
         model.addAttribute("ngo", verifiedNgo);
         model.addAttribute("message", "NGO verified and trusted badge assigned.");
         return "admin/verify-ngos";
+    }
+    
+    @PostMapping("/login")
+    @ResponseBody
+    public Map<String, Object> loginNgo(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String darpanId,
+            HttpSession session) {
+
+        Map<String, Object> response = new HashMap<>();
+        Ngo ngo = null;
+
+        if (darpanId != null && !darpanId.isEmpty()) {
+            ngo = ngoService.loginByDarpanId(darpanId);
+        } else if (email != null && !email.isEmpty()) {
+            ngo = ngoService.loginByEmail(email);
+        }
+
+        if (ngo != null) {
+            session.setAttribute("ngo", ngo);
+            response.put("status", "success");
+            response.put("message", "Welcome, " + ngo.getName() + "!");
+            response.put("id", ngo.getId());
+        } else {
+            response.put("status", "error");
+            response.put("message", "Invalid Email or DARPAN ID. Please try again.");
+        }
+
+        return response;
     }
 
 }
