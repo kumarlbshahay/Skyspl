@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\SkyspleProject\Skyspl\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+53156785.index
+3584289857.index
+2469133761.index
+1361743773.index
+1158459771.index
+1778644582.index
